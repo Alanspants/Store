@@ -1,4 +1,4 @@
-package com.zhijieketang.db.core;
+package JDBCTemplate;
 
 public class DataAccessException extends RuntimeException {
 

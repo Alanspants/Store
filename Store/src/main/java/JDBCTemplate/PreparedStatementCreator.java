@@ -1,4 +1,4 @@
-package com.zhijieketang.db.core;
+package JDBCTemplate;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

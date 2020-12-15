@@ -1,4 +1,4 @@
-package com.zhijieketang.db.core;
+package JDBCTemplate;
 
 import java.io.IOException;
 import java.io.InputStream;
