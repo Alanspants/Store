@@ -1,7 +1,7 @@
 package com.example.Store.domain;
 
 public class Goods {
-    private String id;
+    private long id;
     private String name;
     private Double price;
     private String description;
@@ -14,11 +14,11 @@ public class Goods {
     private String displaysize;
     private String image;
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
