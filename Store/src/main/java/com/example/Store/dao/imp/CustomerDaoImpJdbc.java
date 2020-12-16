@@ -1,15 +1,10 @@
 package com.example.Store.dao.imp;
 
 import JDBCTemplate.JdbcTemplate;
-import JDBCTemplate.PreparedStatementCreator;
-import JDBCTemplate.RowCallbackHandler;
 import com.example.Store.dao.CustomerDao;
 import com.example.Store.domain.Customer;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,7 +16,7 @@ public class CustomerDaoImpJdbc implements CustomerDao {
     @Override
     public Customer findByPk(String pk) {
         List<Customer> list = new ArrayList<Customer>();
-        String sql = "select id, name, password, address, phone, birthday from Customers where id = ?";
+        String sql = "select id, name, password, address, phone, birthday from Customers where id = ?;";
 
         jdbcTemplate.query(conn -> {
             PreparedStatement ps = conn.prepareStatement(sql);
