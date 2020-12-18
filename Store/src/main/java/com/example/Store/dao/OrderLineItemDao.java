@@ -13,5 +13,5 @@ public interface OrderLineItemDao {
 
     void modify(OrderLineItem lineItem);
 
-    void remove(String pk);
+    void remove(int pk);
 }
