@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <!doctype html>
 <html>
@@ -70,6 +71,12 @@
 <hr width="100%"/>
 <div class="text3" align="center">请填写下列信息</div>
 <br>
+<%--显示错误信息--%>
+<ul>
+    <c:forEach var="error" items="${errors}">
+        <li class="error">${error}</li>
+    </c:forEach>
+</ul>
 <form action="controller" method="post" onsubmit="return verify(this)">
     <table width="60%" border="0" align="center" class="boder">
         <tr>
