@@ -81,7 +81,7 @@ public class OrderLineItemDaoImpJdbc implements OrderLineItemDao {
     @Override
     public void create(OrderLineItem lineItem) {
         jdbcTemplate.update(new PreparedStatementCreator() {
-            String sql = "insert into OrderLineItems values (?,?,?,?,?,)";
+            String sql = "insert into OrderLineItems values (?,?,?,?,?)";
             @Override
             public PreparedStatement createPreparedStatement(Connection conn) throws SQLException {
                 PreparedStatement ps = conn.prepareStatement(sql);

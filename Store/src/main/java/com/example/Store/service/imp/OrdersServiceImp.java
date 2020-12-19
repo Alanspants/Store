@@ -38,7 +38,7 @@ public class OrdersServiceImp implements OrdersService {
 
         for (Map<String, Object> item : cart){
             //item的结构：[商品id，数量]
-            long goodsid = (long)item.get("goodsid");
+            int goodsid = (int)item.get("goodsid");
             Integer quantity = (Integer) item.get("quantity");
             Goods goods = goodsDao.findByPk(goodsid);
             // 小计
