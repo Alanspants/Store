@@ -16,5 +16,10 @@ public class Controller extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //客户提交的操作
         String action = request.getParameter("action");
+
+        if("reg".equals(action)) {
+            //客户注册
+            
+        }
     }
 }
