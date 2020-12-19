@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html>
 <head>
@@ -10,7 +11,13 @@
 <body>
 <div class="header">智捷网上电脑商城</div>
 <hr width="100%" />
-<form id="form1" name="form1" method="post" >
+<%--显示错误信息--%>
+<ul>
+  <c:forEach var="error" items="${errors}">
+    <li class="error">${error}</li>
+  </c:forEach>
+</ul>
+<form action="controller" method="post" >
   <table width="100%" align="center" >
     <tr height="40" >
       <td colspan="2" align="center"><strong>请您登录</strong></td>
@@ -29,6 +36,7 @@
         &nbsp;&nbsp;&nbsp;&nbsp; <a href="customer_reg.jsp"><img src="images/reg_button.jpg" border="0" /></a></td>
     </tr>
   </table>
+  <input type="hidden" name="action" value="login">
 </form>
 <div class="footer">
   <hr  width="100%" />

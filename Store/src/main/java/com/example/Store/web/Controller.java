@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -82,6 +83,27 @@ public class Controller extends HttpServlet {
                     request.setAttribute("errors", errors);
                     request.getRequestDispatcher("customer_reg.jsp").forward(request, response);
                 }
+            }
+        } else if ("login".equals(action)) {
+            //客户登陆
+            String userid = request.getParameter("userid");
+            String password = request.getParameter("password");
+
+            Customer customer = new Customer();
+            customer.setId(userid);
+            customer.setPassword(password);
+
+            if (customerService.login(customer)){
+                // 登陆成功
+                HttpSession session = request.getSession();
+                session.setAttribute("customer", customer);
+                request.getRequestDispatcher("main.jsp").forward(request, response);
+            } else {
+                // 登陆失败
+                List<String> errors = new ArrayList<>();
+                errors.add("您输入的账户或密码错误");
+                request.setAttribute("errors", errors);
+                request.getRequestDispatcher("login.jsp").forward(request, response);
             }
         }
     }

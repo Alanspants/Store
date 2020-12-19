@@ -77,7 +77,7 @@
         <li class="error">${error}</li>
     </c:forEach>
 </ul>
-<form action="controller" method="post" >
+<form action="controller" method="post" onsubmit="return verify(this)">
     <table width="60%" border="0" align="center" class="boder">
         <tr>
             <td width="35%" height="27" class="col1">客户账号：</td>
