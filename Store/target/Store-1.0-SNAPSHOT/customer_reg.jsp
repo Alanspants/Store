@@ -37,6 +37,31 @@
             line-height: 50px;
         }
     </style>
+
+    <script>
+
+        function verify(myform) {
+            var errorMsg = "";
+            if (myform.userid.value == "") {
+                errorMsg += "客户账号不能为空！\n";
+            }
+            if (myform.name.value == "") {
+                errorMsg += "客户姓名不能为空！\n";
+            }
+            if (myform.password.value != myform.password2.value) {
+                errorMsg += "两次输入的密码不一致！\n";
+            }
+
+            if (errorMsg == "") {
+                return true;
+            } else {
+                alert(errorMsg);
+                return false;
+            }
+
+        }
+
+    </script>
 </head>
 
 <body>
@@ -45,42 +70,47 @@
 <hr width="100%"/>
 <div class="text3" align="center">请填写下列信息</div>
 <br>
-<table width="60%" border="0" align="center" class="boder">
-    <tr>
-        <td width="35%" height="27" class="col1">客户账号：</td>
-        <td class="col2"><input type="text" name="userid"/>*</td>
-    </tr>
-    <tr>
-        <td height="27" class="col1">客户姓名：</td>
-        <td class="col2"><input type="text" name="name"/>*</td>
-    </tr>
-    <tr>
-        <td height="27" class="col1">客户密码：</td>
-        <td class="col2"><input type="password" name="password"/>*</td>
-    </tr>
-    <tr>
-        <td height="27" class="col1">再次输入密码：</td>
-        <td class="col2"><input type="password" name="password2"/>*</td>
-    </tr>
-    <tr>
-        <td height="27" class="col1">出生日期：</td>
-        <td class="col2"><input type="text" name="birthday"/>*
-            格式（YYYY-MM-DD）
-        </td>
-    </tr>
-    <tr>
-        <td height="27" class="col1">通讯地址：</td>
-        <td class="col2"><input type="text" name="address"/></td>
-    </tr>
-    <tr>
-        <td height="27" class="col1">电话号码：</td>
-        <td class="col2"><input type="text" name="phone"/></td>
-    </tr>
-</table>
-<br>
-<div align="center">
-    <input type="image" src="images/submit_button.jpg"/>
-</div>
+<form action="controller" method="post" onsubmit="return verify(this)">
+    <table width="60%" border="0" align="center" class="boder">
+        <tr>
+            <td width="35%" height="27" class="col1">客户账号：</td>
+            <td class="col2"><input type="text" name="userid"/>*</td>
+        </tr>
+        <tr>
+            <td height="27" class="col1">客户姓名：</td>
+            <td class="col2"><input type="text" name="name"/>*</td>
+        </tr>
+        <tr>
+            <td height="27" class="col1">客户密码：</td>
+            <td class="col2"><input type="password" name="password"/>*</td>
+        </tr>
+        <tr>
+            <td height="27" class="col1">再次输入密码：</td>
+            <td class="col2"><input type="password" name="password2"/>*</td>
+        </tr>
+        <tr>
+            <td height="27" class="col1">出生日期：</td>
+            <td class="col2"><input type="text" name="birthday"/>*
+                格式（YYYY-MM-DD）
+            </td>
+        </tr>
+        <tr>
+            <td height="27" class="col1">通讯地址：</td>
+            <td class="col2"><input type="text" name="address"/></td>
+        </tr>
+        <tr>
+            <td height="27" class="col1">电话号码：</td>
+            <td class="col2"><input type="text" name="phone"/></td>
+        </tr>
+    </table>
+
+
+    <br>
+    <div align="center">
+        <input type="image" src="images/submit_button.jpg"/>
+    </div>
+    <input type="hidden" name="action" value="reg">
+</form>
 <div class="footer">
     <hr width="100%"/>
     Copyright © 智捷课堂 2008-2018. All Rights Reserved

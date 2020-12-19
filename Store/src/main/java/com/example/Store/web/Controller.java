@@ -19,7 +19,7 @@ public class Controller extends HttpServlet {
 
         if("reg".equals(action)) {
             //客户注册
-            
+
         }
     }
 }
