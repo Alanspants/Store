@@ -165,6 +165,13 @@ public class Controller extends HttpServlet {
             request.setAttribute("goodsList", goodsList);
             request.getRequestDispatcher("goods_list.jsp").forward(request, response);
 
+        } else if ("detail".equals(action)){
+            // 商品详情
+            String goodsid = request.getParameter("id");
+            Goods goods = goodsService.queryDetail(new Long(goodsid));
+            request.setAttribute("goods", goods);
+            request.getRequestDispatcher("goods_detail.jsp").forward(request,response);
         }
+
     }
 }

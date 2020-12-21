@@ -59,7 +59,7 @@
                     bgcolor='#edf8ff'
                 </c:if>
         >
-            <td class="col1"><a href="controller?id=${goods.id}">${goods.description}</a></td>
+            <td class="col1"><a href="controller?action=detail&id=${goods.id}">${goods.description}</a></td>
             <td class="col2">${goods.price}</td>
             <td class="col3"><a href="AddCart.html?id=${goods.id}">添加到购物车</a></td>
         </tr>
