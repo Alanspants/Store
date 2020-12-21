@@ -1,9 +1,12 @@
 package com.example.Store.web;
 
 import com.example.Store.domain.Customer;
+import com.example.Store.domain.Goods;
 import com.example.Store.service.CustomerService;
+import com.example.Store.service.GoodsService;
 import com.example.Store.service.ServiceException;
 import com.example.Store.service.imp.CustomerServiceImp;
+import com.example.Store.service.imp.GoodsServiceImp;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,6 +27,7 @@ public class Controller extends HttpServlet {
 
     private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private CustomerService customerService = new CustomerServiceImp();
+    private GoodsService goodsService = new GoodsServiceImp();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
@@ -105,6 +109,12 @@ public class Controller extends HttpServlet {
                 request.setAttribute("errors", errors);
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             }
+        } else if ("list".equals(action)){
+            // 商品列表
+            List<Goods> goodsList = goodsService.queryAll();
+
+            request.setAttribute("goodsList", goodsList);
+            request.getRequestDispatcher("goods_list.jsp").forward(request, response);
         }
     }
 }

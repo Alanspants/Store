@@ -1,3 +1,4 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
 <!doctype html>
 <html>
 <head>
@@ -30,7 +31,7 @@ a:hover {
 <div class="header">智捷网上电脑商城</div>
 <hr width="100%" />
 <div>
-  <p class="text1"> <img src="images/4.jpg"   align="absmiddle" /> <a href="Catalog.html">商品列表</a> </p>
+  <p class="text1"> <img src="images/4.jpg"   align="absmiddle" /> <a href="controller?action=list">商品列表</a> </p>
   <p class="text2"> 您可以从产品列表中浏览感兴趣的产品进行购买 </p>
 </div>
 <hr width="100%" />
