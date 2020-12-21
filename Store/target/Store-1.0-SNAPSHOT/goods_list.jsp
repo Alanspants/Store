@@ -61,16 +61,9 @@
         >
             <td class="col1"><a href="controller?action=detail&id=${goods.id}">${goods.description}</a></td>
             <td class="col2">${goods.price}</td>
-            <td class="col3"><a href="AddCart.html?id=${goods.id}">添加到购物车</a></td>
+            <td class="col3"><a href="controller?action=add&pagename=list&id=${goods.id}&name=${goods.name}&price=${goods.price}">添加到购物车</a></td>
         </tr>
     </c:forEach>
-
-    <tr bgcolor='#edf8ff'>
-        <td class="col1"><a href="Product.html?productId=#">酷耶（Cooyes） i5四核/GTX1050ti独显4G/台式机电脑主机整机全套组装家用办公游戏
-            GTX750独显主机+23英寸显示器</a></td>
-        <td class="col2">￥3399.00</td>
-        <td class="col3"><a href="AddCart.html?productId=#">添加到购物车</a></td>
-    </tr>
 </table>
 <hr/>
 <div align="center">

@@ -18,9 +18,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @WebServlet(name = "Controller", urlPatterns = {"/controller"})
 public class Controller extends HttpServlet {
@@ -165,12 +163,75 @@ public class Controller extends HttpServlet {
             request.setAttribute("goodsList", goodsList);
             request.getRequestDispatcher("goods_list.jsp").forward(request, response);
 
-        } else if ("detail".equals(action)){
+        } else if ("detail".equals(action)) {
             // 商品详情
             String goodsid = request.getParameter("id");
             Goods goods = goodsService.queryDetail(new Long(goodsid));
             request.setAttribute("goods", goods);
-            request.getRequestDispatcher("goods_detail.jsp").forward(request,response);
+            request.getRequestDispatcher("goods_detail.jsp").forward(request, response);
+        } else if ("add".equals(action)) {
+            // 添加购物车
+            String goodsid = request.getParameter("id");
+            String goodsname = request.getParameter("name");
+            Float price = new Float(request.getParameter("price"));
+
+            // 购物车结构是List中包含Map，每一个Map对象是一个商品
+            // 从Session中取出购物车
+            List<Map<String, Object>> cart = (List<Map<String, Object>>) request.getSession().getAttribute("cart");
+
+            if (cart == null) { //第一次取出是null
+                cart = new ArrayList<Map<String, Object>>();
+                request.getSession().setAttribute("cart", cart);
+            }
+
+            // 购物车中有选择的商品
+            int flag = 0;
+
+            for (Map<String, Object> item : cart) {
+                String goodsid2 = (String) item.get("goodsid");
+                if (goodsid.equals(goodsid2)) {
+                    Integer quantity = (Integer) item.get("quantity");
+                    quantity++;
+                    item.put("quantity", quantity);
+
+                    flag++;
+                }
+            }
+
+            // 购物车中没有选择的商品
+            if (flag == 0) {
+
+                Map<String, Object> item = new HashMap<>();
+                // item结构是Map[商品ID, 商品名称, 价格, 数量]
+
+                item.put("goodsid", goodsid);
+                item.put("goodsname", goodsname);
+                item.put("quantity", 1);
+                item.put("price", price);
+
+                cart.add(item);
+            }
+
+            System.out.println(cart);
+
+            String pageName = request.getParameter("pagename");
+
+            if (pageName.equals("list")) {
+                int start = (currentPage - 1) * pageSize;
+                int end = currentPage * pageSize;
+
+                List<Goods> goodsList = goodsService.queryByStartEnd(start, end);
+
+                request.setAttribute("totalPageNumber", totalPageNumber);
+                request.setAttribute("currentPage", currentPage);
+                request.setAttribute("goodsList", goodsList);
+                request.getRequestDispatcher("goods_list.jsp").forward(request, response);
+
+            } else {
+                Goods goods = goodsService.queryDetail(new Long(goodsid));
+                request.setAttribute("goods", goods);
+                request.getRequestDispatcher("goods_detail.jsp").forward(request, response);
+            }
         }
 
     }
