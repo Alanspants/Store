@@ -29,6 +29,11 @@ public class Controller extends HttpServlet {
     private CustomerService customerService = new CustomerServiceImp();
     private GoodsService goodsService = new GoodsServiceImp();
 
+    private int totalPageNumber = 0;    // 总页数
+    private int pageSize = 10;          // 每页行数
+    private int currentPage = 1;        // 当前页面
+
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
@@ -97,7 +102,7 @@ public class Controller extends HttpServlet {
             customer.setId(userid);
             customer.setPassword(password);
 
-            if (customerService.login(customer)){
+            if (customerService.login(customer)) {
                 // 登陆成功
                 HttpSession session = request.getSession();
                 session.setAttribute("customer", customer);
@@ -109,12 +114,57 @@ public class Controller extends HttpServlet {
                 request.setAttribute("errors", errors);
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             }
-        } else if ("list".equals(action)){
+        } else if ("list".equals(action)) {
             // 商品列表
             List<Goods> goodsList = goodsService.queryAll();
 
+            if (goodsList.size() % pageSize == 0) {
+                totalPageNumber = goodsList.size() / pageSize;
+            } else {
+                totalPageNumber = goodsList.size() / pageSize + 1;
+            }
+
+            request.setAttribute("totalPageNumber", totalPageNumber);
+            request.setAttribute("currentPage", currentPage);
+
+            int start = (currentPage - 1) * pageSize;
+            int end = currentPage * pageSize;
+
+            if (currentPage == totalPageNumber) {
+                end = goodsList.size();
+            }
+
+            request.setAttribute("goodsList", goodsList.subList(start, end));
+            request.getRequestDispatcher("goods_list.jsp").forward(request, response);
+
+        } else if ("paging".equals(action)) {
+            // 商品列表分页
+            String page = request.getParameter("page");
+
+            if (page.equals("prev")) {//向上翻页
+                currentPage--;
+                if (currentPage < 1) {
+                    currentPage = 1;
+                }
+            } else if (page.equals("next")) {//向下翻页
+                currentPage++;
+                if (currentPage > totalPageNumber) {
+                    currentPage = totalPageNumber;
+                }
+            } else {
+                currentPage = Integer.valueOf(page);
+            }
+
+            int start = (currentPage - 1) * pageSize;
+            int end = currentPage * pageSize;
+
+            List<Goods> goodsList = goodsService.queryByStartEnd(start, end);
+
+            request.setAttribute("totalPageNumber", totalPageNumber);
+            request.setAttribute("currentPage", currentPage);
             request.setAttribute("goodsList", goodsList);
             request.getRequestDispatcher("goods_list.jsp").forward(request, response);
+
         }
     }
 }
