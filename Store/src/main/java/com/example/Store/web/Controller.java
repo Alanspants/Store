@@ -232,6 +232,24 @@ public class Controller extends HttpServlet {
                 request.setAttribute("goods", goods);
                 request.getRequestDispatcher("goods_detail.jsp").forward(request, response);
             }
+
+        } else if ("cart".equals(action)) {
+            //查看购物车
+            List<Map<String, Object>> cart = (List<Map<String, Object>>) request.getSession().getAttribute("cart");
+            double total = 0.0;
+
+            if (cart != null) {
+                for (Map<String, Object> item : cart) {
+                    String goodsid2 = (String) item.get("goodsid");
+                    Integer quantity = (Integer) item.get("quantity");
+                    Float price = (Float) item.get("price");
+                    double subtotal = price * quantity;
+                    total += subtotal;
+                }
+            }
+
+            request.setAttribute("total", total);
+            request.getRequestDispatcher("cart.jsp").forward(request,response);
         }
 
     }

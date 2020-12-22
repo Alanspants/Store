@@ -1,3 +1,5 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html>
 <head>
@@ -5,7 +7,7 @@
     <title>购物车</title>
     <link rel="stylesheet" type="text/css" href="css/public.css">
     <style type="text/css">
-       table {
+        table {
             border-collapse: collapse;
         }
 
@@ -26,7 +28,7 @@
         }
     </style>
 
-   <script>
+    <script>
         function calc(rowid, quantityInput) {
 
             quantity = quantityInput.value
@@ -68,9 +70,9 @@
 <body>
 <table width="100%" border="0" align="center">
     <tr>
-        <td width="616"><img src="images/mycar.jpg"  /></td>
-        <td width="734" align="right"><img src="images/mycar1.jpg" align="absmiddle" /> <a href="Cart.html">&nbsp;购物车</a>
-            | <a href="zhanghu.html">我的帐户</a> | <a href="Catalog.html">商品列表</a></td>
+        <td width="616"><img src="images/mycar.jpg"/></td>
+        <td width="734" align="right"><img src="images/mycar1.jpg" align="absmiddle"/> <a href="controller?action=cart">&nbsp;购物车</a>
+            | <a href="zhanghu.html">我的帐户</a> | <a href="controller?action=list">商品列表</a></td>
     </tr>
 </table>
 <hr width="100%"/>
@@ -83,31 +85,27 @@
         <td width="15%" align="center" class="theader">单价</td>
         <td width="15%" align="center" class="theader">小计</td>
     </tr>
+
+    <c:forEach var="row" items="${cart}">
+        <tr>
+            <td height="50" align="left" class="trow">${row.goodsname}</td>
+            <td align="center" class="trow">
+                <input name="quantity_${row.goodsid}" type="text" value="${row.quantity}" onblur="calc(1, this)"/>
+            </td>
+            <td align="center" class="trow">&yen;<span id="${row.goodsid}">${row.price}</span></td>
+            <td align="center" class="trow">&yen;<span id="subtotal_${row.goodsid}">${row.price * row.quantity}</span>
+            </td>
+        </tr>
+    </c:forEach>
     <tr>
-        <td height="50" align="left" class="trow">&nbsp;&nbsp;戴尔(DELL)成就3470高性能商用办公台式电脑整机</td>
-        <td align="center" class="trow">
-            <input name="quantity_1" type="text" value="1" onblur="calc(1, this)"/>
-        </td>
-        <td align="center" class="trow">&yen;<span id="price_1">699.99</span></td>
-        <td align="center" class="trow">&yen;<span id="subtotal_1">699.99</span>
-        </td>
-    </tr>
-    <tr>
-        <td height="50" align="left" class="trow">&nbsp;&nbsp;戴尔(DELL)成就3470高性能商用办公台式电脑整机</td>
-        <td align="center" class="trow">
-            <input name="quantity_2" type="text" value="1" class="textfield" onblur="calc(2, this)"/>
-        </td>
-        <td align="center" class="trow">&yen;<span id="price_2">699.99</span></td>
-        <td align="center" class="trow">&yen;<span id="subtotal_2">699.99</span>
-        </td>
-    </tr>
-    <tr>
-        <td height="50" colspan="5" align="right">合计：&yen;<span id="total">1399.98</span>&nbsp;&nbsp;</td>
+        <td height="50" colspan="5" align="right">合计：&yen;<span id="total">${total}</span>&nbsp;&nbsp;</td>
     </tr>
 </table>
 <br>
 <div align="center">
-    <a href="#"><img src="images/submit_order.jpg" border="0"/></a>&nbsp;&nbsp;
+    <c:if test="${not empty cart}">
+        <a href="#"><img src="images/submit_order.jpg" border="0"/></a>&nbsp;&nbsp;
+    </c:if>
 </div>
 <div class="footer">
     <hr width="100%"/>

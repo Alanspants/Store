@@ -36,7 +36,7 @@ a:hover {
 </div>
 <hr width="100%" />
 <div>
-  <p class="text1"> <img src="images/mycar1.jpg" align="absmiddle"  /> <a href="Cart.html">购物车</a> </p>
+  <p class="text1"> <img src="images/mycar1.jpg" align="absmiddle"  /> <a href="controller?action=cart">购物车</a> </p>
   <p class="text2"> 您可以把感兴趣的商品暂时放在购物车中 </p>
 </div>
 <div class="footer">
