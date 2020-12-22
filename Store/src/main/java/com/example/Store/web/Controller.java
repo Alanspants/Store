@@ -291,6 +291,8 @@ public class Controller extends HttpServlet {
             request.getSession().removeAttribute("cart");
             request.getSession().removeAttribute("customer");
             request.getRequestDispatcher("login.jsp").forward(request, response);
+        } else if ("reg_init".equals(action)){
+            request.getRequestDispatcher("customer_reg.jsp").forward(request, response);
         }
     }
 }
