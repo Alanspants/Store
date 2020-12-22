@@ -286,6 +286,11 @@ public class Controller extends HttpServlet {
             request.setAttribute("currentPage", currentPage);
             request.setAttribute("goodsList", goodsList);
             request.getRequestDispatcher("goods_list.jsp").forward(request, response);
+        } else if ("logout".equals(action)) {
+            //注销
+            request.getSession().removeAttribute("cart");
+            request.getSession().removeAttribute("customer");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         }
     }
 }

@@ -38,7 +38,7 @@
     <tr>
         <td width="616"><img src="images/list.jpg" align="absmiddle"/></td>
         <td width="734" align="right"><img src="images/mycar1.jpg" align="absmiddle"/> <a href="controller?action=cart">&nbsp;购物车</a>
-            | <a href="zhanghu.html">我的帐户</a> | <a href="controller?action=list">商品列表</a></td>
+            | <a href="zhanghu.html">我的帐户</a> | <a href="controller?action=logout">账户注销</a></td>
     </tr>
 </table>
 <hr width="100%"/>
