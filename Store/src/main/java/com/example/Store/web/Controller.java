@@ -4,9 +4,12 @@ import com.example.Store.domain.Customer;
 import com.example.Store.domain.Goods;
 import com.example.Store.service.CustomerService;
 import com.example.Store.service.GoodsService;
+import com.example.Store.service.OrdersService;
 import com.example.Store.service.ServiceException;
 import com.example.Store.service.imp.CustomerServiceImp;
 import com.example.Store.service.imp.GoodsServiceImp;
+import com.example.Store.service.imp.OrdersServiceImp;
+import com.sun.tools.corba.se.idl.constExpr.Or;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,6 +29,7 @@ public class Controller extends HttpServlet {
     private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private CustomerService customerService = new CustomerServiceImp();
     private GoodsService goodsService = new GoodsServiceImp();
+    private OrdersService ordersService = new OrdersServiceImp();
 
     private int totalPageNumber = 0;    // 总页数
     private int pageSize = 10;          // 每页行数
@@ -171,7 +175,7 @@ public class Controller extends HttpServlet {
             request.getRequestDispatcher("goods_detail.jsp").forward(request, response);
         } else if ("add".equals(action)) {
             // 添加购物车
-            String goodsid = request.getParameter("id");
+            Integer goodsid = new Integer(request.getParameter("id"));
             String goodsname = request.getParameter("name");
             Float price = new Float(request.getParameter("price"));
 
@@ -188,7 +192,7 @@ public class Controller extends HttpServlet {
             int flag = 0;
 
             for (Map<String, Object> item : cart) {
-                String goodsid2 = (String) item.get("goodsid");
+                Integer goodsid2 = (Integer) item.get("goodsid");
                 if (goodsid.equals(goodsid2)) {
                     Integer quantity = (Integer) item.get("quantity");
                     quantity++;
@@ -240,7 +244,7 @@ public class Controller extends HttpServlet {
 
             if (cart != null) {
                 for (Map<String, Object> item : cart) {
-                    String goodsid2 = (String) item.get("goodsid");
+                    Integer goodsid2 = (Integer) item.get("goodsid");
                     Integer quantity = (Integer) item.get("quantity");
                     Float price = (Float) item.get("price");
                     double subtotal = price * quantity;
@@ -249,8 +253,39 @@ public class Controller extends HttpServlet {
             }
 
             request.setAttribute("total", total);
-            request.getRequestDispatcher("cart.jsp").forward(request,response);
-        }
+            request.getRequestDispatcher("cart.jsp").forward(request, response);
+        } else if ("sub_ord".equals(action)) {
+            //查看购物车
+            List<Map<String, Object>> cart = (List<Map<String, Object>>) request.getSession().getAttribute("cart");
+            for (Map<String, Object> item : cart) {
+                Integer goodsid = (Integer) item.get("goodsid");
+                String strquantity = request.getParameter("quantity" + goodsid);
+                int quantity = 0;
+                try {
+                    quantity = new Integer(strquantity);
+                } catch (Exception e) {
+                    quantity = 0;
+                }
 
+                item.put("quantity", quantity);
+            }
+
+            //提交订单
+            String ordersid = ordersService.submitOrders(cart);
+            request.setAttribute("ordersid", ordersid);
+            request.getRequestDispatcher("order_finish.jsp").forward(request, response);
+            //清楚session
+            request.getSession().removeAttribute("cart");
+        } else if ("main".equals(action)) {
+            int start = (currentPage - 1) * pageSize;
+            int end = currentPage * pageSize;
+
+            List<Goods> goodsList = goodsService.queryByStartEnd(start, end);
+
+            request.setAttribute("totalPageNumber", totalPageNumber);
+            request.setAttribute("currentPage", currentPage);
+            request.setAttribute("goodsList", goodsList);
+            request.getRequestDispatcher("goods_list.jsp").forward(request, response);
+        }
     }
 }

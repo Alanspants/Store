@@ -78,35 +78,39 @@
 <hr width="100%"/>
 <div class="text3" align="center">您选好的商品</div>
 <br>
-<table width="100%" border="0" align="center" class="threeboder">
-    <tr bgcolor="#A5D3FF">
-        <td height="50" align="center" class="theader">商品名称</td>
-        <td width="8%" align="center" class="theader">数量</td>
-        <td width="15%" align="center" class="theader">单价</td>
-        <td width="15%" align="center" class="theader">小计</td>
-    </tr>
-
-    <c:forEach var="row" items="${cart}">
-        <tr>
-            <td height="50" align="left" class="trow">${row.goodsname}</td>
-            <td align="center" class="trow">
-                <input name="quantity_${row.goodsid}" type="text" value="${row.quantity}" onblur="calc(1, this)"/>
-            </td>
-            <td align="center" class="trow">&yen;<span id="${row.goodsid}">${row.price}</span></td>
-            <td align="center" class="trow">&yen;<span id="subtotal_${row.goodsid}">${row.price * row.quantity}</span>
-            </td>
+<form action="controller" method="post">
+    <table width="100%" border="0" align="center" class="threeboder">
+        <tr bgcolor="#A5D3FF">
+            <td height="50" align="center" class="theader">商品名称</td>
+            <td width="8%" align="center" class="theader">数量</td>
+            <td width="15%" align="center" class="theader">单价</td>
+            <td width="15%" align="center" class="theader">小计</td>
         </tr>
-    </c:forEach>
-    <tr>
-        <td height="50" colspan="5" align="right">合计：&yen;<span id="total">${total}</span>&nbsp;&nbsp;</td>
-    </tr>
-</table>
-<br>
-<div align="center">
-    <c:if test="${not empty cart}">
-        <a href="#"><img src="images/submit_order.jpg" border="0"/></a>&nbsp;&nbsp;
-    </c:if>
-</div>
+
+        <c:forEach var="row" items="${cart}">
+            <tr>
+                <td height="50" align="left" class="trow">${row.goodsname}</td>
+                <td align="center" class="trow">
+                    <input name="quantity_${row.goodsid}" type="text" value="${row.quantity}" onblur="calc(1, this)"/>
+                </td>
+                <td align="center" class="trow">&yen;<span id="${row.goodsid}">${row.price}</span></td>
+                <td align="center" class="trow">&yen;<span
+                        id="subtotal_${row.goodsid}">${row.price * row.quantity}</span>
+                </td>
+            </tr>
+        </c:forEach>
+        <tr>
+            <td height="50" colspan="5" align="right">合计：&yen;<span id="total">${total}</span>&nbsp;&nbsp;</td>
+        </tr>
+    </table>
+    <br>
+    <div align="center">
+        <c:if test="${not empty cart}">
+            <input type="image" src="images/submit_order.jpg" border="0">&nbsp;&nbsp;
+        </c:if>
+     </div>
+    <input type="hidden" name="action" value="sub_ord">
+</form>
 <div class="footer">
     <hr width="100%"/>
     Copyright © 智捷课堂 2008-2018. All Rights Reserved

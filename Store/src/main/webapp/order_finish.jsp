@@ -1,3 +1,5 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html>
 <head>
@@ -31,10 +33,10 @@ a:hover {
 <hr width="100%" />
 <div align="center" >
   <p class="text7"> 谢谢您的购物！ </p>
-  <p class="text7"> 您的订单号是： </p>
+  <p class="text7"> 您的订单号是：${ordersid} </p>
   <p class="text7"> 您可以继续购物！ </p>
    <p class="text7">
-       <a href="Catalog.html">返回主页面</a>
+       <a href="controller?action=main">返回主页面</a>
   </p>
 </div>
 
